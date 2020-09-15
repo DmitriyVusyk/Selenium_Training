@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.22'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation("io.github.bonigarcia:webdrivermanager:4.2.0")
+    testImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+}
+test {
+    useJUnitPlatform()
+}
