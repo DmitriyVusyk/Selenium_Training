@@ -61,7 +61,7 @@ public class LiteCartTest extends BaseTest {
     }
     //Homework task 2 end
     //Homework task 3 start
-    @Tag("Find image of discounted yellow duck from popular products by xpath with sale validation")
+    @Tag("Find rubber duck link")
     @Test
     @Order(6)
     void rubberDucksLinkVisible() {
