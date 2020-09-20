@@ -10,7 +10,7 @@ import java.util.List;
 
 import static constants.Constants.GL_SELENIUM_DEMO_STORE_URL;
 
-public class LiteCartTest extends BaseTest {
+public class LiteCartHW2 extends BaseTest {
 
     @BeforeEach
     void beforeTest() {
@@ -22,7 +22,7 @@ public class LiteCartTest extends BaseTest {
     @Test
     @Order(1)
     void popularDiscountedDuckXPath() {
-        WebElement yellowDuckImage = driver.findElement(By.xpath("//*[@id=\"box-popular-products\"]//*[@class=\"sticker sale\" and text()=\"Sale\"]/ancestor::article//img[contains(@alt,\"Yellow Duck\")]"));
+        WebElement yellowDuckImage = driver.findElement(By.xpath("//*[@id='box-popular-products']//*[@class='sticker sale' and text()='Sale']/ancestor::article//img[contains(@alt,'Yellow Duck')]"));
         Assert.assertTrue(yellowDuckImage.isDisplayed());
     }
 
@@ -39,8 +39,10 @@ public class LiteCartTest extends BaseTest {
     @Order(3)
     void popularDiscountedDuckCSS() {
         List<WebElement> yellowDuckImages = driver.findElements(By.cssSelector("#box-popular-products .product-column"));
-        yellowDuckImages.stream().filter(webElement -> webElement.getText().equalsIgnoreCase("on sale"));
-        yellowDuckImages.forEach(webElement -> Assert.assertTrue("Yellow duck image is present: ", webElement.isDisplayed()));
+        yellowDuckImages.stream()
+                .filter(webElement -> webElement.getText().equalsIgnoreCase("on sale"))
+                .forEach(webElement ->
+                        Assert.assertTrue("Yellow duck image is present: ", webElement.isDisplayed()));
     }
     //Homework task 1 end
     //Homework task 2 start
