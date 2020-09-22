@@ -104,6 +104,3 @@ public class LiteCartHW4 extends BaseTest {
         return result;
     }
 }
-
-
-//  //a[contains(@href, 'en.wikipedia.org/wiki/')]
