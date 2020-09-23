@@ -3,13 +3,12 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +19,7 @@ public class LiteCartHW4 extends BaseTest {
     private static final String INPUT_FIELD_PASSWORD_XPATH = "//*[@class='form-control' and @name='password']";
     private static final String BTN_LOGIN_XPATH = "//*[@class='btn btn-default'][@value='Login']";
     private static final String SIDEBAR_CSS_SELECTOR = "#box-apps-menu";
-    public static final String WIKI_LINK = "en.wikipedia.org/wiki/";
+
 
     private WebDriverWait wait = new WebDriverWait(driver, 10);
 
@@ -30,20 +29,18 @@ public class LiteCartHW4 extends BaseTest {
     void linksAreOpenedInNewWindow() {
         driver.get(LITE_CART_LOGIN_FORM_URL);
         login(USERNAME, PASSWORD);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='name' and text()='Countries']/parent::a"))).click();
+        driver.get(COUNTRIES_MENU_LINK);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='Spain']"))).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='content']")));
         List<WebElement> links = driver.findElements(By.xpath("//a[contains(@href, '" + WIKI_LINK + "')]"));
         links.forEach(link -> {
             String originalWindow = driver.getWindowHandle();
+            Set<String> existWs = driver.getWindowHandles();
             String expectedURL = link.getAttribute("href");
             expectedURL = removeProtocol(expectedURL);
             link.click();
-            waitForNewWindow(driver, 10);
-            Set<String> openedWindows = driver.getWindowHandles();
-            openedWindows.remove(originalWindow);
-            ArrayList<String> mainList = new ArrayList<>(openedWindows);
-            driver.switchTo().window(mainList.get(0));
+            String openedWindow = wait.until(anyWindowOtherThan(existWs));
+            driver.switchTo().window(openedWindow);
             driver.findElement(By.cssSelector("#mw-panel"));
             String actualURL = driver.getCurrentUrl();
             actualURL = removeProtocol(actualURL);
@@ -65,27 +62,12 @@ public class LiteCartHW4 extends BaseTest {
         Assert.assertTrue(sidebar.isDisplayed());
     }
 
-    private boolean waitForNewWindow(WebDriver driver, int timeoutInSeconds) {
-        boolean flag = false;
-        int counter = 0;
-        while (!flag) {
-            try {
-                Set<String> winId = driver.getWindowHandles();
-                if (winId.size() > 1) {
-                    flag = true;
-                    return flag;
-                }
-                Thread.sleep(1000);
-                counter++;
-                if (counter > timeoutInSeconds) {
-                    return flag;
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return false;
-            }
-        }
-        return flag;
+    public ExpectedCondition<String> anyWindowOtherThan(Set<String> windows) {
+        return input -> {
+            Set<String> handles = driver.getWindowHandles();
+            handles.removeAll(windows);
+            return handles.size() > 0 ? handles.iterator().next() : null;
+        };
     }
 
     private String removeProtocol(String url) {
