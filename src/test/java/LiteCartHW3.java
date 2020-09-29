@@ -25,7 +25,7 @@ public class LiteCartHW3 extends BaseTest {
     @Test
     @Order(1)
     void everySectionHasHeader() {
-        driver.get(LITE_CART_LOGIN_FORM_URL);
+        driver.get(LOGIN_FORM_URL);
         login(USERNAME, PASSWORD);
         List<String> sideBarElementsLinks = driver.findElements(By.xpath("//*[@id='box-apps-menu']//li[@class='app']//a"))
                 .stream()
@@ -60,7 +60,7 @@ public class LiteCartHW3 extends BaseTest {
     @Test
     @Order(2)
     void checkProperties() {
-        driver.get(GL_SELENIUM_DEMO_STORE_URL);
+        driver.get(MAIN_PAGE_URL);
         WebElement campaignFirstProductContainerMainPage = driver.findElement(By.xpath("//*[@id='box-campaign-products']//div[@class='listing products']/article"));
         WebElement priceWrapper = campaignFirstProductContainerMainPage.findElement(By.xpath("//div[@class='price-wrapper']"));
         WebElement regularPrice = priceWrapper.findElement(By.xpath("//del[@class='regular-price']"));
@@ -74,7 +74,6 @@ public class LiteCartHW3 extends BaseTest {
         String expectedRegularPhontDecoration = regularPrice.getCssValue("text-decoration-line");
         String expectedCampaignPhont = campaignPrice.getCssValue("font-weight");
         campaignFirstProductContainerMainPage.click();
-
 
         WebElement productPageView = driver.findElement(By.xpath("//*[@id='box-product']"));
         WebElement productPagePriceWrapper = productPageView.findElement(By.xpath("//div[@class='price-wrapper']"));

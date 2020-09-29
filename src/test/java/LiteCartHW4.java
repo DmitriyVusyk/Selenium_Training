@@ -27,9 +27,9 @@ public class LiteCartHW4 extends BaseTest {
     @Test
     @Order(1)
     void linksAreOpenedInNewWindow() {
-        driver.get(LITE_CART_LOGIN_FORM_URL);
+        driver.get(LOGIN_FORM_URL);
         login(USERNAME, PASSWORD);
-        driver.get(COUNTRIES_MENU_LINK);
+        driver.get(COUNTRIES_MENU_URL);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='Spain']"))).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='content']")));
         List<WebElement> links = driver.findElements(By.xpath("//a[contains(@href, '" + WIKI_LINK + "')]"));

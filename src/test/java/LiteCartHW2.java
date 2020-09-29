@@ -8,13 +8,13 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-import static constants.Constants.GL_SELENIUM_DEMO_STORE_URL;
+import static constants.Constants.MAIN_PAGE_URL;
 
 public class LiteCartHW2 extends BaseTest {
 
     @BeforeEach
     void beforeTest() {
-        driver.get(GL_SELENIUM_DEMO_STORE_URL);
+        driver.get(MAIN_PAGE_URL);
     }
 
     //Homework task 1 start
